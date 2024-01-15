@@ -1,12 +1,12 @@
 import React from "react";
-import Routes from "./routing/Routes";
-import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider, theme } from "@chakra-ui/react";
+import MainLayout from "./pages/Main/MainLayout";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <MainLayout />
+    </ThemeProvider>
   );
 };
 
