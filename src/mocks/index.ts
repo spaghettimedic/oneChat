@@ -2,19 +2,21 @@ import { theme } from "@chakra-ui/react";
 import { SavedConversation, User } from "../types";
 
 export const mockUser1: User = {
-  userName: "mockUser1",
+  username: "mockUser1",
   color: theme.colors.blue[400],
 };
 export const mockUser2: User = {
-  userName: "mockUser2",
+  username: "mockUser2",
   color: theme.colors.red[400],
 };
 export const mockUser3: User = {
-  userName: "mockUser3",
+  username: "mockUser3",
   color: theme.colors.green[400],
 };
 
-export const mockMyConversations: SavedConversation[] = [
+export const mockUsers = [mockUser1, mockUser2, mockUser3];
+
+export const mockSavedConversations: SavedConversation[] = [
   {
     title: "mock1Title",
     users: [mockUser1, mockUser2, mockUser3],

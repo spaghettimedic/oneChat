@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { Button, Divider, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Button, Grid, GridItem, Text } from "@chakra-ui/react";
 import {
   BiCog,
   BiConversation,
@@ -19,6 +19,8 @@ import CreateUser from "../CreateUser";
 import Settings from "../Settings";
 import ManageUsers from "../ManageUsers";
 import LoginSignup from "../LoginSignup";
+import { ConversationTools } from "../../components/ConversationTools";
+import { SavedConversationTools } from "../../components/SavedConversationsTools";
 
 const MainLayout: React.FC = () => {
   const [state, dispatch] = useReducer(pageReducer, { newConversation: true });
@@ -27,13 +29,13 @@ const MainLayout: React.FC = () => {
 
   return (
     <Grid
-      templateColumns="repeat(20, 1fr)"
-      templateRows="repeat(10, 1fr)"
+      templateColumns="repeat(12, 1fr)"
+      templateRows="repeat(12, 1fr)"
       gap={5}
       height="96vh"
       margin="2vh"
     >
-      <GridItem colSpan={20} rowSpan={2} border="2px solid red">
+      <GridItem colSpan={12} rowSpan={2} border="2px solid red">
         <Text>Advertisement banner</Text>
       </GridItem>
 
@@ -87,7 +89,7 @@ const MainLayout: React.FC = () => {
         </Button>
       </GridItem>
 
-      <GridItem rowStart={9} {...leftMenuGridItemStyles}>
+      <GridItem rowStart={11} {...leftMenuGridItemStyles}>
         <Button
           {...buttonStyles}
           isActive={state.settings}
@@ -98,7 +100,7 @@ const MainLayout: React.FC = () => {
         </Button>
       </GridItem>
 
-      <GridItem rowStart={10} {...leftMenuGridItemStyles}>
+      <GridItem rowStart={12} {...leftMenuGridItemStyles}>
         <Button
           {...buttonStyles}
           isActive={state.loginSignup}
@@ -110,21 +112,11 @@ const MainLayout: React.FC = () => {
       </GridItem>
 
       <GridItem
-        {...leftMenuGridItemStyles}
-        colSpan={1}
-        colStart={5}
+        colSpan={state.newConversation || state.savedConversations ? 8 : 10}
+        colStart={3}
         rowSpan={10}
         rowStart={3}
-      >
-        <Divider orientation="vertical" borderWidth="thin" color="orangered" />
-      </GridItem>
-
-      <GridItem
-        colSpan={12}
-        colStart={6}
-        rowSpan={10}
-        rowStart={3}
-        border="2px solid red"
+        border="2px solid orangered"
       >
         {state.newConversation && <Conversation />}
         {state.savedConversations && <SavedConversations />}
@@ -134,6 +126,22 @@ const MainLayout: React.FC = () => {
         {state.settings && <Settings />}
         {state.loginSignup && <LoginSignup />}
       </GridItem>
+
+      {(state.newConversation || state.savedConversations) && (
+        <GridItem
+          colSpan={2}
+          colStart={11}
+          rowSpan={10}
+          rowStart={3}
+          borderLeft="2px solid orangered"
+        >
+          {state.newConversation ? (
+            <ConversationTools />
+          ) : (
+            <SavedConversationTools />
+          )}
+        </GridItem>
+      )}
     </Grid>
   );
 };
