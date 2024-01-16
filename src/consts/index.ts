@@ -16,7 +16,13 @@ export const userButtonStyles = {
   background: "none",
 };
 
-export const checkboxStyles = {
-  variant: "ghost",
+export const switchStyles = {
   colorScheme: "orange",
+};
+
+export const selectStyles = {
+  iconColor: "orangered",
+  borderColor: "orangered",
+  fontWeight: "bold",
+  textColor: "orangered",
 };

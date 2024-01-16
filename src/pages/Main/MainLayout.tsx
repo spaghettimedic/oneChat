@@ -5,8 +5,8 @@ import {
   BiConversation,
   BiFolder,
   BiFolderOpen,
-  BiLogIn,
-  BiLogOut,
+  // BiLogIn,
+  // BiLogOut,
   BiUser,
   BiUserPlus,
 } from "react-icons/bi";
@@ -18,14 +18,12 @@ import { ChangePage, pageReducer } from "../../utils/handleChangePage";
 import CreateUser from "../CreateUser";
 import Settings from "../Settings";
 import ManageUsers from "../ManageUsers";
-import LoginSignup from "../LoginSignup";
+// import LoginSignup from "../LoginSignup";
 import { ConversationTools } from "../../components/ConversationTools";
 import { SavedConversationTools } from "../../components/SavedConversationsTools";
 
 const MainLayout: React.FC = () => {
   const [state, dispatch] = useReducer(pageReducer, { newConversation: true });
-
-  const loggedIn = true;
 
   return (
     <Grid
@@ -34,6 +32,7 @@ const MainLayout: React.FC = () => {
       gap={5}
       height="96vh"
       margin="2vh"
+      overflow="hidden"
     >
       <GridItem colSpan={12} rowSpan={2} border="2px solid red">
         <Text>Advertisement banner</Text>
@@ -89,7 +88,7 @@ const MainLayout: React.FC = () => {
         </Button>
       </GridItem>
 
-      <GridItem rowStart={11} {...leftMenuGridItemStyles}>
+      <GridItem rowStart={12} {...leftMenuGridItemStyles}>
         <Button
           {...buttonStyles}
           isActive={state.settings}
@@ -100,7 +99,7 @@ const MainLayout: React.FC = () => {
         </Button>
       </GridItem>
 
-      <GridItem rowStart={12} {...leftMenuGridItemStyles}>
+      {/* <GridItem rowStart={12} {...leftMenuGridItemStyles}>
         <Button
           {...buttonStyles}
           isActive={state.loginSignup}
@@ -109,14 +108,14 @@ const MainLayout: React.FC = () => {
         >
           {loggedIn ? "Logout" : "Login / Signup"}
         </Button>
-      </GridItem>
+      </GridItem> */}
 
       <GridItem
         colSpan={state.newConversation || state.savedConversations ? 8 : 10}
         colStart={3}
         rowSpan={10}
         rowStart={3}
-        border="2px solid orangered"
+        borderLeft="2px solid orangered"
       >
         {state.newConversation && <Conversation />}
         {state.savedConversations && <SavedConversations />}
@@ -124,7 +123,7 @@ const MainLayout: React.FC = () => {
         {state.manageUsers && <ManageUsers />}
 
         {state.settings && <Settings />}
-        {state.loginSignup && <LoginSignup />}
+        {/* {state.loginSignup && <LoginSignup />} */}
       </GridItem>
 
       {(state.newConversation || state.savedConversations) && (

@@ -1,22 +1,12 @@
-import {
-  Button,
-  Checkbox,
-  Grid,
-  GridItem,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { mockSavedConversations } from "../../mocks";
-import { BiDownload, BiFile, BiSolidFilePdf } from "react-icons/bi";
 import { useState } from "react";
+import { Button, Grid, GridItem, Text, useDisclosure } from "@chakra-ui/react";
+
+import { mockSavedConversations } from "../../mocks";
+import { BiFile } from "react-icons/bi";
+
 import { SavedConversation } from "../../types";
+import { ConversationModal } from "../../components/ConversationModal";
+import { buttonStyles } from "../../consts";
 
 const SavedConversations: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -25,62 +15,47 @@ const SavedConversations: React.FC = () => {
   >(undefined);
 
   const handleDoubleClick = (convo: SavedConversation) => {
-    console.log("LOGGED - clicked open");
     setModalContent(convo);
     onOpen();
   };
   const handleClose = () => {
-    console.log("LOGGED - clicked close");
+    setModalContent(undefined);
     onClose();
   };
 
   return (
     <>
       <Grid
-        templateColumns="repeat(12, 1fr)"
-        templateRows="repeat(4, 1fr)"
-        gap={5}
-        border="2px solid blue"
+        templateColumns="repeat(6, 1fr)"
+        gridTemplateRows="repeat(6, 1fr)"
+        justifyContent="space-around"
+        overflowY="auto"
+        height="100%"
       >
-        {mockSavedConversations.map((convo, i) => (
-          <GridItem colSpan={1} colStart={i + 1}>
-            <Checkbox
-              icon={<></>}
-              colorScheme="none"
-              value={convo.title}
+        {mockSavedConversations.map((convo) => (
+          <GridItem width="100%" height="100%">
+            <Button
+              {...buttonStyles}
               onDoubleClick={() => handleDoubleClick(convo)}
-              textAlign="center"
+              display="block"
+              marginX="auto"
+              marginTop={2}
+              height="fit-content"
             >
               <BiFile size="2em" />
-              <Text>{convo.title}</Text>
-              <Text fontSize="xs">{convo.users.length} users</Text>
-            </Checkbox>
+              <Text maxWidth="100px" isTruncated>
+                {convo.title}
+              </Text>
+            </Button>
           </GridItem>
         ))}
       </Grid>
 
-      <Modal
+      <ConversationModal
         isOpen={isOpen}
         onClose={handleClose}
-        scrollBehavior="inside"
-        size="xl"
-      >
-        <ModalOverlay backdropFilter="blur(5px) hue-rotate(45deg)" />
-        <ModalContent border="2px solid red">
-          <ModalHeader>This is the modal content</ModalHeader>
-          <ModalCloseButton />
-
-          <ModalBody>
-            <Text>{modalContent?.title}</Text>
-          </ModalBody>
-
-          <ModalFooter gap={4}>
-            <Button rightIcon={<BiSolidFilePdf size="2em" />}>Email as</Button>
-
-            <Button rightIcon={<BiDownload size="2em" />}>Download</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+        modalContent={modalContent}
+      />
     </>
   );
 };

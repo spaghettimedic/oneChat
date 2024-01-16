@@ -1,17 +1,19 @@
+import { useState } from "react";
+import { BiUserMinus, BiUserPlus } from "react-icons/bi";
+
 import {
   Box,
   Button,
-  Checkbox,
+  Switch,
   Grid,
   GridItem,
   Select,
   Text,
   Tooltip,
 } from "@chakra-ui/react";
-import { checkboxStyles, userButtonStyles } from "../consts";
+
+import { selectStyles, switchStyles, userButtonStyles } from "../consts";
 import { mockUsers } from "../mocks";
-import { BiUserMinus, BiUserPlus } from "react-icons/bi";
-import { useState } from "react";
 
 export const ConversationTools: React.FC = () => {
   const [activeUsers, setActiveUsers] = useState<string[]>([]);
@@ -30,19 +32,17 @@ export const ConversationTools: React.FC = () => {
       templateRows="repeat(12, 1fr)"
       gap={5}
       height="100%"
-      margin="2vh"
+      marginX="1em"
     >
       <GridItem colSpan={1} rowSpan={1} rowStart={1}>
         <Select
           placeholder="Add users"
           icon={<BiUserPlus size="2em" />}
-          iconColor="orangered"
-          borderColor="orangered"
-          textColor="oreangered"
+          {...selectStyles}
           value={activeUsers}
           onChange={handleSelect}
         >
-          {/* TODO: replace mockusers with real users */}
+          {/* TODO: replace mockUsers with real users */}
           {mockUsers
             .filter((mockUser) => !activeUsers.includes(mockUser.username))
             .map((user) => (
@@ -62,7 +62,8 @@ export const ConversationTools: React.FC = () => {
           activeUsers.map((username) => (
             <Box display="flex" justifyContent="space-between">
               <Button
-                onClick={() => console.log("LOGGED", { username })}
+                // TODO: actual onClick() behavior
+                // onClick={() => }
                 style={userButtonStyles}
               >
                 {username}
@@ -84,9 +85,9 @@ export const ConversationTools: React.FC = () => {
       </GridItem>
 
       <GridItem colSpan={1} rowSpan={1} rowStart={11}>
-        <Checkbox {...checkboxStyles} defaultChecked>
+        <Switch {...switchStyles} defaultChecked>
           Show timestamps
-        </Checkbox>
+        </Switch>
       </GridItem>
     </Grid>
   );
